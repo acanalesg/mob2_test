@@ -16,13 +16,13 @@ class CdrMapper:
     def __call__(self, key, value):
         """
         Parses a Cdr
-        Returns (user,cell) , (Counter{ daytype&hour: cnt})
+        Returns (cell,user) , (Counter{ daytype&hour: cnt})
         """
         toks = value.split("|")
         day = toks[5]
 
         if day != self.cur_date:
-            cur_date = day
+            self.cur_date = day
             dt_obj = datetime.strptime(day, dateformat)
             dt_wkday = dt_obj.strftime("%w")
 
