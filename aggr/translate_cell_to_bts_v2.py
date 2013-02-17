@@ -22,12 +22,13 @@ def vectorsMapper(key, value):
     # cell, (1, user, vectors)
     yield key[0], (1, key[1], value)
 
-
 def mergeReducer(key, values):
     # values come ordered by value ==> cellLkp first
     # Take bts from lkp, counter and user from vector
+    bts = "not found"
     for v in values:
-        bts = "not found"
+        print >> sys.stderr, str(key) + str(v) + str(v[0])
+
         if v[0] == 0:
             bts = v[1]
         else:
