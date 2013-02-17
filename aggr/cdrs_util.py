@@ -44,6 +44,8 @@ class CdrMapper:
 
 
 
+
+
 if __name__ == "__main__":
     mapper = CdrMapper()
     k = mapper(1,"013092038884|11017846||||10/10/2012|10:10:29|")

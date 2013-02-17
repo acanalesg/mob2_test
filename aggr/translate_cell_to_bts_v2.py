@@ -10,6 +10,9 @@ __author__ = 'acg'
 """
 
 from dumbo.lib import MultiMapper
+from dumbo import identitymapper
+from collections import Counter
+
 
 sep="|"
 
@@ -27,14 +30,16 @@ def mergeReducer(key, values):
     # Take bts from lkp, counter and user from vector
     bts = "not found"
     for v in values:
-        print >> sys.stderr, str(key) + str(v) + str(v[0])
-
         if v[0] == 0:
             bts = v[1]
         else:
             yield (bts, v[1]), v[2]
 
-
+def counterSumreducer(key, values):
+    c = Counter()
+    for v in values:
+        c = c + v
+    yield key, c
 
 def runner(job):
     multimap = MultiMapper()
@@ -43,6 +48,8 @@ def runner(job):
     o1 = job.additer( multimap
         , mergeReducer )
 
+    o2 = job.additer( identitymapper
+        , counterSumreducer)
 
 if __name__ == "__main__":
     from dumbo import main
