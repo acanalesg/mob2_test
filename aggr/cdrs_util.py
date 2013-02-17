@@ -21,10 +21,12 @@ class CdrMapper:
         toks = value.split("|")
         day = toks[5]
 
+
         if day != self.cur_date:
+            print >> sys.stderr, "En el if" 
             self.cur_date = day
             dt_obj = datetime.strptime(day, dateformat)
-            dt_wkday = dt_obj.strftime("%w")
+            dt_wkday = int( dt_obj.strftime("%w") )
 
             if dt_wkday == 0:        # Sunday
                 self.cur_daytype = 93
@@ -34,6 +36,7 @@ class CdrMapper:
                 self.cur_daytype = 91
             elif dt_wkday == 6:      # Saturday
                 self.cur_daytype = 92
+            print >> sys.stderr, "cur_daytype: " + str(self.cur_daytype)
 
         daytype_hour = self.cur_daytype*1000 + int( toks[6][0:2] )
 

@@ -21,6 +21,7 @@ def runner(job):
     o1 = job.additer(CdrMapper
         , counterSumreducer
         , combiner=counterSumreducer
+        , buffersize=10000
         , opts=opts )
 
 
